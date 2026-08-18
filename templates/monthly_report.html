@@ -1,0 +1,314 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monthly Expense Report</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>📊 Monthly Expense Report</h1>
+
+            <p>
+                Welcome,
+                <strong>{{ username }}</strong>
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <a
+                href="/"
+                class="header-link"
+            >
+                🏠 Dashboard
+            </a>
+
+            <a
+                href="/logout"
+                class="logout-button"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- REPORT SUMMARY -->
+
+    <div class="dashboard">
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                💰
+            </div>
+
+            <h3>
+                Monthly Expense
+            </h3>
+
+            <p class="dashboard-value">
+                ₹{{ "%.2f"|format(total) }}
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                🧾
+            </div>
+
+            <h3>
+                Transactions
+            </h3>
+
+            <p class="dashboard-value">
+                {{ expense_count }}
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📊
+            </div>
+
+            <h3>
+                Average Expense
+            </h3>
+
+            <p class="dashboard-value">
+                ₹{{ "%.2f"|format(average) }}
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                💵
+            </div>
+
+            <h3>
+                Budget Remaining
+            </h3>
+
+            <p class="dashboard-value">
+                ₹{{ "%.2f"|format(remaining_budget) }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORY SUMMARY -->
+
+    <div class="card">
+
+        <h2>
+            📋 Category Summary
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Total Amount
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in category_data %}
+
+                    <tr>
+
+                        <td>
+                            {{ item[0] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(item[1]) }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="2"
+                            class="no-data"
+                        >
+                            No expenses available.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPENSE DETAILS -->
+
+    <div class="card">
+
+        <h2>
+            🧾 Expense Details
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Expense
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for expense in expenses %}
+
+                    <tr>
+
+                        <td>
+                            {{ expense[1] }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(expense[2]) }}
+                        </td>
+
+                        <td>
+                            {{ expense[3] }}
+                        </td>
+
+                        <td>
+                            {{ expense[4] }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="no-data"
+                        >
+                            No expenses available.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            💰 <strong>Expense Tracker</strong>
+        </p>
+
+        <p>
+            Monthly financial summary
+        </p>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
+```

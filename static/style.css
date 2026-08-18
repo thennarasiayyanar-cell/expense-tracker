@@ -1,0 +1,536 @@
+```css
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container {
+    width: 92%;
+    max-width: 1150px;
+    margin: 30px auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.header h1 {
+    margin: 0 0 8px 0;
+    font-size: 30px;
+}
+
+.header p {
+    margin: 5px 0;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* =========================================
+   HEADER LINKS
+========================================= */
+
+.header-link,
+.logout-button {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.header-link {
+    background-color: #eeeeee;
+    color: #333;
+}
+
+.logout-button {
+    background-color: #333;
+    color: white;
+}
+
+.header-link:hover,
+.logout-button:hover {
+    text-decoration: none;
+    opacity: 0.85;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 25px 0;
+}
+
+
+/* =========================================
+   DASHBOARD CARD
+========================================= */
+
+.dashboard-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.dashboard-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.dashboard-card h3 {
+    font-size: 17px;
+    margin: 10px 0;
+}
+
+.dashboard-value {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
+/* =========================================
+   GENERAL CARDS
+========================================= */
+
+.card {
+    background-color: white;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   BUDGET
+========================================= */
+
+.budget-info {
+    line-height: 1.8;
+}
+
+.budget-info p {
+    margin: 5px 0;
+}
+
+
+/* =========================================
+   FORM LABELS
+========================================= */
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+input,
+select {
+    width: 100%;
+    max-width: 450px;
+
+    padding: 12px;
+
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+
+    font-size: 15px;
+
+    background-color: white;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #555555;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+button {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    background-color: #333333;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   EXPENSE TABLE
+========================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: white;
+}
+
+th,
+td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f7f7f7;
+}
+
+
+/* =========================================
+   EDIT BUTTON
+========================================= */
+
+.edit-button {
+    display: inline-block;
+
+    padding: 7px 10px;
+
+    margin: 2px;
+
+    border-radius: 5px;
+
+    background-color: #eeeeee;
+    color: #333333;
+
+    text-decoration: none;
+}
+
+.edit-button:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+
+.delete-button {
+    display: inline-block;
+
+    padding: 7px 10px;
+
+    margin: 2px;
+
+    border-radius: 5px;
+
+    background-color: #333333;
+    color: white;
+
+    text-decoration: none;
+}
+
+.delete-button:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+
+/* =========================================
+   NO EXPENSE DATA
+========================================= */
+
+.no-data {
+    text-align: center;
+    padding: 25px;
+    color: #777777;
+}
+
+
+/* =========================================
+   CHART
+========================================= */
+
+.chart-container {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+#expenseChart {
+    width: 100% !important;
+    height: auto !important;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+    color: #666666;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+
+/* =========================================
+   HORIZONTAL LINE
+========================================= */
+
+hr {
+    border: none;
+    border-top: 1px solid #dddddd;
+    margin: 30px 0;
+}
+
+
+/* =========================================
+   LOGIN & REGISTER
+========================================= */
+
+.auth-container {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background-color: #f4f6f8;
+}
+
+.auth-card {
+    background-color: white;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 40px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.auth-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.auth-card h1 {
+    margin: 0 0 5px 0;
+}
+
+.auth-card h2 {
+    margin-top: 15px;
+}
+
+.auth-text {
+    color: #666666;
+    margin-bottom: 25px;
+}
+
+.auth-card form {
+    text-align: left;
+}
+
+.auth-card label {
+    margin-top: 15px;
+}
+
+.auth-card input {
+    width: 100%;
+    max-width: none;
+}
+
+.auth-button {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.auth-bottom {
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+    .container {
+        width: 95%;
+        margin: 15px auto;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .header {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .header-link,
+    .logout-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .auth-card {
+        padding: 25px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+
+}
+```

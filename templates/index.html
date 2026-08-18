@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Tracker Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>💰 Expense Tracker</h1>
+
+            <p>
+                Welcome, <strong>{{ username }}</strong>!
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <a
+                href="/monthly-report"
+                class="header-link"
+            >
+                📊 Monthly Report
+            </a>
+
+            <a
+                href="/logout"
+                class="logout-button"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         FLASH MESSAGES
+    ====================================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =====================================
+         DASHBOARD SUMMARY
+    ====================================== -->
+
+    <div class="dashboard">
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                💰
+            </div>
+
+            <h3>Total Expense</h3>
+
+            <div class="dashboard-value">
+                ₹{{ "%.2f"|format(total) }}
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                🧾
+            </div>
+
+            <h3>Total Transactions</h3>
+
+            <div class="dashboard-value">
+                {{ expense_count }}
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📈
+            </div>
+
+            <h3>Average Expense</h3>
+
+            <div class="dashboard-value">
+                ₹{{ "%.2f"|format(average) }}
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                💵
+            </div>
+
+            <h3>Remaining Budget</h3>
+
+            <div class="dashboard-value">
+                ₹{{ "%.2f"|format(remaining_budget) }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         BUDGET
+    ====================================== -->
+
+    <div class="card">
+
+        <h2>💵 Monthly Budget</h2>
+
+        <div class="budget-info">
+
+            <p>
+                <strong>Budget:</strong>
+                ₹{{ "%.2f"|format(budget) }}
+            </p>
+
+            <p>
+                <strong>Spent:</strong>
+                ₹{{ "%.2f"|format(total) }}
+            </p>
+
+            <p>
+                <strong>Remaining:</strong>
+                ₹{{ "%.2f"|format(remaining_budget) }}
+            </p>
+
+            <p>
+                {{ budget_status }}
+            </p>
+
+        </div>
+
+
+        <form
+            method="POST"
+            action="/set-budget"
+            class="budget-form"
+        >
+
+            <label for="budget">
+                Set Monthly Budget
+            </label>
+
+            <input
+                type="number"
+                id="budget"
+                name="budget"
+                min="0"
+                step="0.01"
+                placeholder="Enter your budget"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">
+                💾 Save Budget
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================
+         ADD EXPENSE
+    ====================================== -->
+
+    <div class="card">
+
+        <h2>➕ Add New Expense</h2>
+
+
+        <form
+            method="POST"
+            action="/add"
+        >
+
+
+            <label for="expense_name">
+                Expense Name
+            </label>
+
+            <input
+                type="text"
+                id="expense_name"
+                name="expense_name"
+                placeholder="Example: Lunch"
+                required
+            >
+
+
+            <label for="amount">
+                Amount
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="Example: 150"
+                min="0"
+                step="0.01"
+                required
+            >
+
+
+            <label for="category">
+                Category
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Food">
+                    🍔 Food
+                </option>
+
+                <option value="Travel">
+                    🚗 Travel
+                </option>
+
+                <option value="Shopping">
+                    🛍️ Shopping
+                </option>
+
+                <option value="Bills">
+                    💡 Bills
+                </option>
+
+                <option value="Education">
+                    📚 Education
+                </option>
+
+                <option value="Other">
+                    📦 Other
+                </option>
+
+            </select>
+
+
+            <br><br>
+
+
+            <button type="submit">
+                ➕ Add Expense
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================
+         SEARCH & FILTER
+    ====================================== -->
+
+    <div class="card">
+
+        <h2>🔎 Search Expenses</h2>
+
+
+        <form
+            method="GET"
+            action="/"
+            class="search-section"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search expense..."
+            >
+
+
+            <select name="category">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                <option
+                    value="Food"
+                    {% if category_filter == "Food" %}
+                    selected
+                    {% endif %}
+                >
+                    🍔 Food
+                </option>
+
+                <option
+                    value="Travel"
+                    {% if category_filter == "Travel" %}
+                    selected
+                    {% endif %}
+                >
+                    🚗 Travel
+                </option>
+
+                <option
+                    value="Shopping"
+                    {% if category_filter == "Shopping" %}
+                    selected
+                    {% endif %}
+                >
+                    🛍️ Shopping
+                </option>
+
+                <option
+                    value="Bills"
+                    {% if category_filter == "Bills" %}
+                    selected
+                    {% endif %}
+                >
+                    💡 Bills
+                </option>
+
+                <option
+                    value="Education"
+                    {% if category_filter == "Education" %}
+                    selected
+                    {% endif %}
+                >
+                    📚 Education
+                </option>
+
+                <option
+                    value="Other"
+                    {% if category_filter == "Other" %}
+                    selected
+                    {% endif %}
+                >
+                    📦 Other
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                🔎 Search
+            </button>
+
+
+            <a
+                href="/"
+                class="header-link"
+            >
+                Clear
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================
+         EXPENSE HISTORY
+    ====================================== -->
+
+    <div class="card">
+
+        <h2>📋 Expense History</h2>
+
+
+        {% if expenses %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Expense
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for expense in expenses %}
+
+                            <tr>
+
+                                <td>
+                                    {{ expense["date"] }}
+                                </td>
+
+                                <td>
+                                    {{ expense["expense_name"] }}
+                                </td>
+
+                                <td>
+                                    {{ expense["category"] }}
+                                </td>
+
+                                <td>
+                                    ₹{{ "%.2f"|format(expense["amount"]) }}
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="/edit/{{ expense['id'] }}"
+                                        class="edit-button"
+                                    >
+                                        ✏️ Edit
+                                    </a>
+
+
+                                    <a
+                                        href="/delete/{{ expense['id'] }}"
+                                        class="delete-button"
+                                        onclick="return confirm('Are you sure you want to delete this expense?');"
+                                    >
+                                        🗑️ Delete
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="no-data">
+
+                <h3>
+                    📭 No expenses found
+                </h3>
+
+                <p>
+                    Add your first expense above.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================
+         CATEGORY SUMMARY
+    ====================================== -->
+
+    {% if category_data %}
+
+        <div class="card">
+
+            <h2>📊 Spending by Category</h2>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Amount Spent
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in category_data %}
+
+                            <tr>
+
+                                <td>
+                                    {{ item["category"] }}
+                                </td>
+
+                                <td>
+                                    ₹{{ "%.2f"|format(item[1]) }}
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <div class="footer">
+
+        <p>
+            💰 <strong>Expense Tracker</strong>
+        </p>
+
+        <p>
+            Manage your expenses easily and efficiently.
+        </p>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
+

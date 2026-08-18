@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Expense</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>✏️ Edit Expense</h1>
+
+            <p>
+                Update your expense details
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <a
+                href="/"
+                class="header-link"
+            >
+                🏠 Dashboard
+            </a>
+
+            <a
+                href="/logout"
+                class="logout-button"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- EDIT FORM -->
+
+    <div class="card">
+
+        <h2>
+            ✏️ Update Expense
+        </h2>
+
+
+        <form
+            method="POST"
+            action="/edit/{{ expense['id'] }}"
+        >
+
+
+            <!-- EXPENSE NAME -->
+
+            <label for="expense_name">
+                Expense Name
+            </label>
+
+            <input
+                type="text"
+                id="expense_name"
+                name="expense_name"
+                value="{{ expense['expense_name'] }}"
+                required
+            >
+
+
+            <!-- AMOUNT -->
+
+            <label for="amount">
+                Amount
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                name="amount"
+                value="{{ expense['amount'] }}"
+                min="0"
+                step="0.01"
+                required
+            >
+
+
+            <!-- CATEGORY -->
+
+            <label for="category">
+                Category
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option
+                    value="Food"
+                    {% if expense['category'] == 'Food' %}
+                    selected
+                    {% endif %}
+                >
+                    🍔 Food
+                </option>
+
+                <option
+                    value="Travel"
+                    {% if expense['category'] == 'Travel' %}
+                    selected
+                    {% endif %}
+                >
+                    🚗 Travel
+                </option>
+
+                <option
+                    value="Shopping"
+                    {% if expense['category'] == 'Shopping' %}
+                    selected
+                    {% endif %}
+                >
+                    🛍️ Shopping
+                </option>
+
+                <option
+                    value="Bills"
+                    {% if expense['category'] == 'Bills' %}
+                    selected
+                    {% endif %}
+                >
+                    💡 Bills
+                </option>
+
+                <option
+                    value="Education"
+                    {% if expense['category'] == 'Education' %}
+                    selected
+                    {% endif %}
+                >
+                    📚 Education
+                </option>
+
+                <option
+                    value="Other"
+                    {% if expense['category'] == 'Other' %}
+                    selected
+                    {% endif %}
+                >
+                    📦 Other
+                </option>
+
+            </select>
+
+
+            <br><br>
+
+
+            <!-- BUTTONS -->
+
+            <button type="submit">
+                💾 Save Changes
+            </button>
+
+            &nbsp;&nbsp;
+
+            <a
+                href="/"
+                class="header-link"
+            >
+                ❌ Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            💰 <strong>Expense Tracker</strong>
+        </p>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
+```

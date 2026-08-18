@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register - Expense Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="auth-container">
+
+
+    <div class="auth-card">
+
+
+        <!-- ICON -->
+
+        <div class="auth-icon">
+            💰
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+            Expense Tracker
+        </h1>
+
+        <p class="auth-text">
+            Create your account
+        </p>
+
+
+        <h2>
+            Register
+        </h2>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash-message {{ category }}">
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- REGISTER FORM -->
+
+        <form
+            method="POST"
+            action="/register"
+        >
+
+
+            <!-- USERNAME -->
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Create a username"
+                autocomplete="username"
+                required
+            >
+
+
+            <!-- PASSWORD -->
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+            >
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                📝 Create Account
+            </button>
+
+
+        </form>
+
+
+        <!-- LOGIN LINK -->
+
+        <div class="auth-bottom">
+
+            <p>
+                Already have an account?
+            </p>
+
+            <a href="/login">
+                🔐 Login here
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+
